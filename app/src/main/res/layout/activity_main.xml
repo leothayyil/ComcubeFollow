@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor="@color/greenlite"
         android:layout_marginBottom="40dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,26 +41,19 @@
                     android:textSize="30dp"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     android:scaleType="centerCrop"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="25dp"
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_gravity="left|bottom"
                     android:background="@android:drawable/screen_background_dark_transparent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_person_btm"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:textSize="22dp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -80,6 +74,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/greenlite"
                 android:layout_gravity="center_horizontal">
 
                 <TextView
@@ -90,15 +85,16 @@
                     android:text="Deal With Shop"
                     android:textSize="30dp"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:scaleType="centerCrop"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="25dp"
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_gravity="left|bottom"
                     android:background="@android:drawable/screen_background_dark_transparent"
                     android:orientation="vertical">
@@ -111,6 +107,53 @@
                         android:textSize="22dp"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/finish_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor="@color/greenlite"
+        android:layout_marginBottom="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.2"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/finish_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Finish"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="25dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="left|bottom"
+                    android:background="@android:drawable/screen_background_dark_transparent"
+                    android:orientation="vertical">
+
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
