@@ -15,18 +15,31 @@ import retrofit2.http.Query;
 
 public interface APIs {
 
-    @GET("web-api/user_login.php?")
-    Call<JsonElement>login(@Query("user_name") String user_name, @Query("password")
-            String password, @Query("pos_lat") String pos_lat, @Query("pos_long") String pos_long);
+    @FormUrlEncoded
+    @POST("web-api/api-comcube.php")
+    Call<JsonElement>login(@Field("user_name") String user_name, @Field("password")
+            String password, @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_long,@Field("action") String login);
 
     @FormUrlEncoded
-    @POST("/web-api/insert_shop.php?")
-    Call<JsonElement>logout(@Field("shop_name") String shopName, @Field("phone")String phone, @Field("user_id") String user_id,
-                              @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon, @Field("feedback") String feedback);
+    @POST("/web-api/api-comcube.php")
+    Call<JsonElement>logout(@Field("action") String shopName,  @Field("user_id") String user_id,@Field("login_id")String loginId,
+                              @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon);
 
     @FormUrlEncoded
-    @POST("/web-api/insert_shop.php?")
-    Call<JsonElement>personUpdate(@Field("shop_name") String name, @Field("phone")String email, @Field("user_id") String user_id,
-                            @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon, @Field("feedback") String feedback);
+    @POST("/web-api/api-comcube.php")
+    Call<JsonElement>personUpdate(@Field("action") String action, @Field("user_id") String user_id,
+                            @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon, @Field("contact_phone")
+                                          String phone,@Field("contact_name") String contact_name,@Field("contact_email")
+                                          String contact_email,@Field("feedback")String feedback);
+    @FormUrlEncoded
+    @POST("/web-api/api-comcube.php")
+    Call<JsonElement>visitUpdate(@Field("action") String action, @Field("user_id") String user_id,
+                                  @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon,
+                                 @Field("shop_name") String shopName,@Field("shop_phone") String shopPhone);
+    @FormUrlEncoded
+    @POST("/web-api/api-comcube.php")
+    Call<JsonElement>feedbackUpdate(@Field("action") String action, @Field("user_id") String user_id,
+                                  @Field("pos_lat") String pos_lat, @Field("pos_long") String pos_lon, @Field("shop_id") String shopId
+            , @Field("shop_phone")String phone, @Field("contact_email")String email,@Field("feedback") String feedback);
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.user.comcubefollow.LoginActivity;
 import com.example.user.comcubefollow.MainActivity;
 import com.example.user.comcubefollow.PersonActivity;
+import com.example.user.comcubefollow.ShopActivity;
 
 import java.sql.Time;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,10 @@ public class RetrofitHelper {
     }
 
     public RetrofitHelper(PersonActivity personActivity) {
+        initResstAdapter();
+    }
+
+    public RetrofitHelper(ShopActivity shopActivity) {
         initResstAdapter();
     }
 

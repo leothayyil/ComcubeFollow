@@ -28,19 +28,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity  implements LocationListener {
 
     CardView shopCard, personCard, finishCard;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     String userId;
-    String shopname = "logout";
-    String phone = "logout";
-    String lat = "lat";
-    String lon = "lon";
-    String feedb = "logout";
+    String login_id;
+    String lat,lon;
     LocationManager locationManager;
     String provider;
+    String action="logout";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white))
                 .tintIcon(true)
                 .apply();
-        preferences = this.getSharedPreferences("user_id", 0);
+        preferences = this.getSharedPreferences("user_details", 0);
         editor = preferences.edit();
-        userId = preferences.getString("user_id_preff", "0");
+        userId = preferences.getString("user_idd", "0");
+        login_id=preferences.getString("login_idd","0");
+
 
         if (userId == "0") {
             Intent logIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
     }
 
-    private void signOut() {
-        new RetrofitHelper(MainActivity.this).getApIs().logout(shopname,phone,userId,lat,lon,feedb)
+    private void signOut()  {
+        new RetrofitHelper(MainActivity.this).getApIs().logout(action,userId,login_id,lat,lon)
                 .enqueue(new Callback<JsonElement>() {
                     @Override
                     public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
@@ -142,6 +142,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     public void onFailure(Call<JsonElement> call, Throwable t) {
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
     @Override

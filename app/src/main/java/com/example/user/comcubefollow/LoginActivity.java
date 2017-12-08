@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     Button login;
     ProgressDialog progress;
     String lat,lon;
+    String action ="login";
 
     private LocationManager locationManager;
     private String provider;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         login = findViewById(R.id.btn_login);
         progress = new ProgressDialog(this);
 
-        preferences=this.getSharedPreferences("user_id",0);
+        preferences=this.getSharedPreferences("user_details",0);
         editor=preferences.edit();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -92,7 +93,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                 String username = userName.getText().toString();
                 String passw = password.getText().toString();
 
-                if (userName.getText().toString().isEmpty()) {
+                if (lat==null){
+                    Toasty.warning(LoginActivity.this, "Location Can't be retrieved!"+"\n"+" Check your Gps status.", Toast.LENGTH_SHORT).show();
+                }
+
+               else if (userName.getText().toString().isEmpty()) {
                     Toasty.warning(LoginActivity.this, "Username field is blank!", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().isEmpty()) {
                     Toasty.warning(LoginActivity.this, "Password field is blank!", Toast.LENGTH_SHORT).show();
@@ -106,20 +111,29 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     }
 
-    private void loginMeth(String user,String passw)  {
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    private void loginMeth(String user, String passw)  {
         new RetrofitHelper(LoginActivity.this).getApIs().
-                login(user, passw, lat, lon).enqueue(new Callback<JsonElement>() {
+                login(user, passw, lat, lon,action).enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
                 String userId = "";
+                String login_id = "";
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().toString());
                     String status = jsonObject.getString("status");
                     userId = jsonObject.getString("user_id");
+                    login_id=jsonObject.getString("login_id");
                     String dateTime = jsonObject.getString("dt_time");
 
-                    editor.putString("user_id_preff",userId);
+                    editor.putString("user_idd",userId);
+                    editor.putString("userIdd",userId);
+                    editor.putString("login_idd",login_id);
                     editor.commit();
 
                     progress.dismiss();

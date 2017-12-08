@@ -2,6 +2,7 @@ package com.example.user.comcubefollow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +36,22 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
     Button submit;
     EditText etPerson,etEmail,etPhone,etfb;
     String sPerson,sEmail,sPhone,sFeedback;
+    String action="personal";
+    String userId;
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +63,13 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
         etPhone=findViewById(R.id.edt_personsPhone);
         etfb=findViewById(R.id.edt_Per_feedback);
         submit=findViewById(R.id.btn_submitPerson);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        preferences = this.getSharedPreferences("user_details", 0);
+        editor = preferences.edit();
+        userId = preferences.getString("user_idd", "0");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -72,10 +97,10 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (lat.equals("")){
-                    Toasty.warning(getBaseContext(), "Oops! Gps service is Failed to locate you!", Toast.LENGTH_SHORT).show();
+                if (lat==null){
+                    Toasty.warning(PersonActivity.this, "Location Can't be retrieved!"+"\n"+" Check your Gps status.", Toast.LENGTH_SHORT).show();
                 }
-                if (etPerson.getText().toString().equals("")){
+                 else if (etPerson.getText().toString().equals("")){
                     Toasty.warning(getBaseContext(), "Name field is blank!", Toast.LENGTH_SHORT).show();
                 }else if (etEmail.getText().toString().equals("")){
                     Toasty.warning(getBaseContext(), "Email id field is blank!", Toast.LENGTH_SHORT).show();
@@ -98,7 +123,7 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
     }
 
     private void submitFb() {
-        new RetrofitHelper(PersonActivity.this).getApIs().personUpdate(sPerson,sEmail,sPhone,lat,lon,sFeedback)
+        new RetrofitHelper(PersonActivity.this).getApIs().personUpdate(action,userId,lat,lon,sPhone,sPerson,sEmail,sFeedback)
                 .enqueue(new Callback<JsonElement>() {
                     @Override
                     public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
@@ -129,7 +154,8 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
     @Override
     public void onLocationChanged(Location location) {
         Log.i("TAG", lat+","+lon);
-
+        lat= String.valueOf(location.getLatitude());
+        lon= String.valueOf(location.getLongitude());
     }
 
     @Override
