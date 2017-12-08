@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                     if (userId.isEmpty()){
                         Toasty.warning(LoginActivity.this, "Check your login details!", Toast.LENGTH_SHORT).show();
                     }else {
-                        Toasty.success(getApplicationContext(),"Success",Toast.LENGTH_SHORT);
+                        Toasty.success(LoginActivity.this,"Success",Toast.LENGTH_SHORT);
 
                         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);

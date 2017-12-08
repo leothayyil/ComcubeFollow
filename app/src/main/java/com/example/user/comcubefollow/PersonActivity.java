@@ -1,6 +1,7 @@
 package com.example.user.comcubefollow;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -10,21 +11,42 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.user.comcubefollow.retrofit.RetrofitHelper;
+import com.google.gson.JsonElement;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonActivity extends AppCompatActivity implements LocationListener{
 
     LocationManager locationManager;
     String provider,lat,lon;
+    Button submit;
+    EditText etPerson,etEmail,etPhone,etfb;
+    String sPerson,sEmail,sPhone,sFeedback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        etPerson=findViewById(R.id.edt_personsName);
+        etEmail=findViewById(R.id.edt_personEmail);
+        etPhone=findViewById(R.id.edt_personsPhone);
+        etfb=findViewById(R.id.edt_Per_feedback);
+        submit=findViewById(R.id.btn_submitPerson);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, false);
 
@@ -46,6 +68,62 @@ public class PersonActivity extends AppCompatActivity implements LocationListene
         }else{
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lat.equals("")){
+                    Toasty.warning(getBaseContext(), "Oops! Gps service is Failed to locate you!", Toast.LENGTH_SHORT).show();
+                }
+                if (etPerson.getText().toString().equals("")){
+                    Toasty.warning(getBaseContext(), "Name field is blank!", Toast.LENGTH_SHORT).show();
+                }else if (etEmail.getText().toString().equals("")){
+                    Toasty.warning(getBaseContext(), "Email id field is blank!", Toast.LENGTH_SHORT).show();
+                }else if (etPhone.getText().toString().equals("")){
+                    Toasty.warning(getBaseContext(), "Phone number field is blank!", Toast.LENGTH_SHORT).show();
+                }else if (etfb.getText().toString().equals("")){
+                    Toasty.warning(getBaseContext(), "Feedback field is blank!", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    sPerson=etPerson.getText().toString();
+                    sEmail=etEmail.getText().toString();
+                    sPhone=etPhone.getText().toString();
+                    sFeedback=etfb.getText().toString();
+                    submitFb();
+                }
+            }
+        });
+
+
+    }
+
+    private void submitFb() {
+        new RetrofitHelper(PersonActivity.this).getApIs().personUpdate(sPerson,sEmail,sPhone,lat,lon,sFeedback)
+                .enqueue(new Callback<JsonElement>() {
+                    @Override
+                    public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response.body().toString());
+                            String status=jsonObject.getString("status");
+                            if (status.equals("Success")){
+                                Toasty.success(getBaseContext(), status, Toast.LENGTH_SHORT).show();
+
+                                Intent mainIntent=new Intent(PersonActivity.this,MainActivity.class);
+                                startActivity(mainIntent);
+                            }else {
+                                Toasty.error(getBaseContext(), "Oops! Try again.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonElement> call, Throwable t) {
+
+                    }
+                });
     }
 
     @Override

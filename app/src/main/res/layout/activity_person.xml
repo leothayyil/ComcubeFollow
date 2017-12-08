@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/edt_feedback"
+            <EditText android:id="@+id/edt_Per_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textImeMultiLine"

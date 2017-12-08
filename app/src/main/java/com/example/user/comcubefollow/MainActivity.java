@@ -62,11 +62,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 .apply();
         preferences = this.getSharedPreferences("user_id", 0);
         editor = preferences.edit();
-        userId = preferences.getString("user_id", "0");
+        userId = preferences.getString("user_id_preff", "0");
 
-        if (userId != "0") {
-
-        } else {
+        if (userId == "0") {
             Intent logIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(logIntent);
         }
@@ -124,15 +122,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                         try {
                             JSONObject jsonObject=new JSONObject(response.body().toString());
+                            String status=jsonObject.getString("status");
+                            if (status.equals("Success")){
+                                Intent logIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(logIntent);
+                                Toasty.success(getBaseContext(), status, Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                Toasty.error(getBaseContext(), "Oops! Try again.", Toast.LENGTH_SHORT).show();
+
+                            }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<JsonElement> call, Throwable t) {
-
                     }
                 });
     }
