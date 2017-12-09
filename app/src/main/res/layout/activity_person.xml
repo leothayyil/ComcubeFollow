@@ -23,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#000"
-        android:text="Appointment Details"
-        android:textSize="20dp"
+        android:text="@string/appointment_details"
+        android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
     <android.support.design.widget.TextInputLayout
@@ -36,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="Whom you met?"
-            android:textStyle="italic"/>
+            android:hint="@string/whom_you_met"
+           />
     </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="Email id"
-                android:textStyle="italic"/>
+               />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -60,8 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:hint="Phone number"
-                android:textStyle="italic"/>
+                android:hint="@string/phone_number"
+               />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -72,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textImeMultiLine"
-                android:hint="Feedback?"
-                android:textStyle="italic"/>
+                android:hint="@string/feedback"
+                />
         </android.support.design.widget.TextInputLayout>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_submitPerson"
@@ -84,7 +84,7 @@
             android:padding="12dp"
             android:textColor="@color/white"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Submit"/>
+            android:text="@string/submit"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

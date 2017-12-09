@@ -96,21 +96,42 @@ public class MainActivity extends AppCompatActivity  implements LocationListener
         personCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent persIntent=new Intent(MainActivity.this,PersonActivity.class);
-                startActivity(persIntent);
+
+                if (lat==null){
+                    Toasty.warning(getBaseContext(), "Oops! Check your Gps settings. "+"\n"+
+                            "Location needed", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    Intent persIntent=new Intent(MainActivity.this,PersonActivity.class);
+                    startActivity(persIntent);
+                }
             }
         });
         shopCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent shopIntent=new Intent(MainActivity.this,ShopActivity.class);
-                startActivity(shopIntent);
+                if (lat==null){
+                    Toasty.warning(getBaseContext(), "Oops! Check your Gps settings. "+"\n"+
+                            "Location needed", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent shopIntent=new Intent(MainActivity.this,ShopActivity.class);
+                    startActivity(shopIntent);
+                }
+
+
             }
         });
         finishCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOut();
+
+                if (lat==null){
+                    Toasty.warning(getBaseContext(), "Oops! Check your Gps settings. "+"\n"+
+                            "Location needed", Toast.LENGTH_SHORT).show();
+                }else {
+                    signOut();
+                }
+
             }
         });
     }
@@ -127,6 +148,10 @@ public class MainActivity extends AppCompatActivity  implements LocationListener
                                 Intent logIntent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(logIntent);
                                 Toasty.success(getBaseContext(), status, Toast.LENGTH_SHORT).show();
+                                editor.remove("user_idd");
+                                editor.remove("login_idd");
+                                editor.commit();
+                                editor.clear();
                             }else
                             {
                                 Toasty.error(getBaseContext(), "Oops! Try again.", Toast.LENGTH_SHORT).show();

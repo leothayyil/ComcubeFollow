@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Comcube Follow</string>
+    <string name="appointment_details">Appointment Details</string>
+    <string name="whom_you_met">Whom you met?</string>
+    <string name="phone_number">Phone number</string>
+    <string name="feedback">Feedback?</string>
+    <string name="submit">Submit</string>
+    <string name="feedback_details">Feedback Details</string>
+    <string name="shop_name">Shop name</string>
+    <string name="email_id">Email id</string>
+    <string name="contact_name">Contact name</string>
 </resources>

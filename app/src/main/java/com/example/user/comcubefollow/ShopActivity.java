@@ -140,8 +140,8 @@ public class ShopActivity extends AppCompatActivity implements LocationListener 
           public void onClick(View v) {
 
               if (lat==null){
-                  Toasty.warning(getBaseContext(), "Location Can't be retrieved!\"" +
-                                  "+\"\\n\"+\" Check your Gps status!",
+                  Toasty.warning(getBaseContext(), "Location Can't be retrieved!" +
+                                  "\n"+" Check your Gps status!",
                           Toast.LENGTH_SHORT).show();
 
               }else if (edt_shpNameV.getText().toString().equals("")){
